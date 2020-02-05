@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+    canvas{
+
+border: solid;
+
+    }
+    body{
+background-color: rgb(91, 241, 191);
+
+    }
+    </style>
+</head>
+<body>
+    <h3>Bem-vindo ao jogo da cobrinha</h3>
+   <p> <b>Controles:</b> w = cima, s = baixo, d = direita, a = esquerda</p>
+    <canvas id="id" height="500px" width="500px"></canvas>
+
+<script>
+var h = document.getElementById("id");
+var tela = h.getContext("2d");
+var começar = false;
+var direita = 1; var baixo = 0; var linha = []; var coluna = []; var x = 0;
+linha.push(10); coluna.push(10); linha.push(9); coluna.push(10);linha.push(8);coluna.push(10)
+var linhacomida = 2; var colunacomida = 2;
+tela.fillStyle = "red";
+tela.fillRect(colunacomida*25,linhacomida*25,25,25)
+tela.fillStyle = "black";
+
+var olho = addEventListener("keydown", direção)
+
+//define a direçao que a cobra vai andar
+function direção(a){
+    
+if (a.keyCode == 87 && baixo!=1){
+baixo = -1;
+direita = 0
+
+}
+if (a.keyCode == 83 && baixo!= -1){
+    começar = true;
+baixo = 1;
+direita = 0
+
+}
+if (a.keyCode == 65 && direita!=1){
+    começar = true;
+baixo = 0;
+direita = -1
+
+}
+if (a.keyCode == 68 && direita!=-1){
+    começar = true;
+baixo = 0;
+direita = 1
+
+}
+
+
+}
+function mudar(){
+    if (começar == true)
+    {
+tela.clearRect(coluna[linha.length - 1]*25, linha[linha.length - 1]*25,25,25)
+x = (linha.length - 1);
+//atualiza as coordenadas de todo o corpo da cobrinha com exessao da cabeça
+
+while(x>0){
+linha[x] = linha[x-1];
+coluna[x] = coluna[x-1];
+x--
+}
+
+linha[0] = linha[0] + baixo;
+coluna[0] = coluna[0] + direita;
+
+x = 0;
+while(x<linha.length){
+
+tela.fillRect(coluna[x]*25,linha[x]*25,25,25);
+x++
+}
+
+x = 1;
+//verifica se a cobra bateu nela mesma
+while(x<linha.length){
+if (linha[0] == linha[x] && coluna[0] == coluna[x]){
+   window.document.write("perdeu"); 
+}
+x++;
+//verifica se a cobrinha bateu na parede
+}
+if (linha[0]*25 == 500 || coluna[0]*25 == 500 ||
+ linha[0]*25 == -25 || coluna[0]*25 == -25){
+    window.document.write("perdeu");
+}
+//verifica se a cobrinha comeu a comida
+if (linha[0] == linhacomida && coluna[0] == colunacomida){
+   x = 0;
+  linha.push(linha[0]); coluna.push(coluna[0]);
+   linhacomida = Math.floor(Math.random() * Math.floor(19));
+   colunacomida = Math.floor(Math.random() * Math.floor(19));
+   //impede que a comida nasça num local ocupado pela cobra
+    while(x<linha.length){
+        if (linhacomida == linha[x] && colunacomida == coluna[x]){
+        linhacomida = Math.floor(Math.random() * Math.floor(19));
+   colunacomida = Math.floor(Math.random() * Math.floor(19));
+   x = -1;
+   }
+   x++;
+    }
+
+  tela.fillStyle = "red";
+   tela.fillRect(colunacomida*25,linhacomida*25,25,25);
+   tela.fillStyle = "black";
+  }
+
+    }
+}
+
+
+setInterval(mudar,100);
+
+</script>
+
+</body>
+</html>
