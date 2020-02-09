@@ -21,14 +21,14 @@ background-color: rgb(91, 241, 191);
 <body>
     <h3>Bem-vindo ao jogo da cobrinha</h3>
    <p> <b>Controles:</b> w = cima, s = baixo, d = direita, a = esquerda</p>
-    <canvas id="id" height="500px" width="500px"></canvas>
+    <canvas id="id" height="300px" width="300px"></canvas>
 
 <script>
 var h = document.getElementById("id");
 var tela = h.getContext("2d");
 var começar = false;
 var direita = 1; var baixo = 0; var linha = []; var coluna = []; var x = 0;
-linha.push(10); coluna.push(10); linha.push(9); coluna.push(10);linha.push(8);coluna.push(10)
+linha.push(7); coluna.push(5); linha.push(6); coluna.push(5);linha.push(5);coluna.push(5)
 var linhacomida = 2; var colunacomida = 2;
 tela.fillStyle = "red";
 tela.fillRect(colunacomida*25,linhacomida*25,25,25)
@@ -82,10 +82,9 @@ linha[0] = linha[0] + baixo;
 coluna[0] = coluna[0] + direita;
 
 x = 0;
-while(x<linha.length){
-
-tela.fillRect(coluna[x]*25,linha[x]*25,25,25);
-x++
+while (x<linha.length) {
+  tela.fillRect(coluna[x]*25,linha[x]*25,25,25);
+  x++
 }
 
 x = 1;
@@ -97,7 +96,7 @@ if (linha[0] == linha[x] && coluna[0] == coluna[x]){
 x++;
 //verifica se a cobrinha bateu na parede
 }
-if (linha[0]*25 == 500 || coluna[0]*25 == 500 ||
+if (linha[0]*25 == 300 || coluna[0]*25 == 300 ||
  linha[0]*25 == -25 || coluna[0]*25 == -25){
     window.document.write("perdeu");
 }
@@ -105,13 +104,13 @@ if (linha[0]*25 == 500 || coluna[0]*25 == 500 ||
 if (linha[0] == linhacomida && coluna[0] == colunacomida){
    x = 0;
   linha.push(linha[0]); coluna.push(coluna[0]);
-   linhacomida = Math.floor(Math.random() * Math.floor(19));
-   colunacomida = Math.floor(Math.random() * Math.floor(19));
+   linhacomida = Math.floor(Math.random() * Math.floor(11));
+   colunacomida = Math.floor(Math.random() * Math.floor(11));
    //impede que a comida nasça num local ocupado pela cobra
     while(x<linha.length){
         if (linhacomida == linha[x] && colunacomida == coluna[x]){
-        linhacomida = Math.floor(Math.random() * Math.floor(19));
-   colunacomida = Math.floor(Math.random() * Math.floor(19));
+        linhacomida = Math.floor(Math.random() * Math.floor(11));
+   colunacomida = Math.floor(Math.random() * Math.floor(11));
    x = -1;
    }
    x++;
